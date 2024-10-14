@@ -17,7 +17,7 @@ Posteriormente, ingresar la siguiente linea de comando para crear el contenedor 
 docker run -t -d IMAGE_ID
 ```
 
-Finalmente, ingresar al contenedor utilizando la siguiente linea de comando (IMAGE_ID -> hash/id del contenedor):
+Finalmente, ingresar al contenedor utilizando la siguiente linea de comando (CONTAINER_ID -> hash/id del contenedor):
 ```
 docker exec -it CONTAINER_ID /bin/bash
 ```
