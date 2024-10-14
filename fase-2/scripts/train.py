@@ -1,17 +1,19 @@
 import argparse
-import pickle
+import joblib
 import os
 from loguru import logger
 import numpy as np
 import pandas as pd
 
-from keras import Sequential
-from keras.api.layers import Conv2D, MaxPooling2D, Flatten, Dense, Input, Dropout, Flatten, MaxPool2D
+import tensorflow as tf
+from tensorflow.keras import layers
+from tensorflow.keras import Sequential
+from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Input, Dropout, Flatten, MaxPool2D
 from sklearn.model_selection import train_test_split
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
-from keras.api.optimizers import RMSprop
-from keras.api.callbacks import ReduceLROnPlateau
-from keras.api.utils import to_categorical
+from tensorflow.keras.optimizers import RMSprop
+from tensorflow.keras.callbacks import ReduceLROnPlateau
+from tensorflow.keras.utils import to_categorical
 
 def fitModel(epochs, batch_size, Xtr, Ytr):
     # Set the random seed
@@ -48,7 +50,7 @@ def fitModel(epochs, batch_size, Xtr, Ytr):
     model.compile(optimizer=optimizer, loss="categorical_crossentropy", metrics=["accuracy"])
 
     # Set a learning rate annealer
-    learning_rate_reduction = ReduceLROnPlateau(monitor='val_accuracy',
+    learning_rate_reduction = ReduceLROnPlateau(monitor='accuracy',
                                                 patience=3,
                                                 verbose=1,
                                                 factor=0.5,
@@ -98,16 +100,15 @@ if os.path.isfile(model_file):
         exit(-1)
 
 logger.info("loading train data")
-z = pd.read_csv(data_file).values
-Xtr = z[:,:2]
+z = pd.read_csv(data_file)
+Xtr = z.iloc[:,1:]
 Xtr = Xtr / 255.0
 Xtr = Xtr.values.reshape(-1,28,28,1)
-ytr = z[:,-1]
+ytr = z.iloc[:,0]
 ytr = to_categorical(ytr, num_classes = 10)
 
 logger.info("fitting model")
 m = fitModel(5, 86, Xtr, ytr)
 
 logger.info(f"saving model to {model_file}")
-with open(model_file, "wb") as f:
-    pickle.dump(m, f)
+m.save(model_file)

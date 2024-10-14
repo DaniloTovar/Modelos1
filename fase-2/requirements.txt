@@ -1,10 +1,7 @@
 pandas
 numpy
-pickle
+joblib
 tensorflow
-keras
-jupyter
-sys
+scikit-learn
 argparse
 loguru
-os

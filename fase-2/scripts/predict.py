@@ -3,13 +3,13 @@ import numpy as np
 from loguru import logger
 import os
 import pandas as pd
-import pickle
+from tensorflow.keras.models import load_model
 
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--input_file', required=True, type=str, help='a csv file with input data (no targets)')
 parser.add_argument('--predictions_file', required=True, type=str, help='a csv file where predictions will be saved to')
-parser.add_argument('--model_file', required=True, type=str, help='a pkl file with a model already stored (see train.py)')
+parser.add_argument('--model_file', required=True, type=str, help='a .keras file with a model already stored (see train.py)')
 
 args = parser.parse_args()
 
@@ -29,10 +29,11 @@ if not os.path.isfile(input_file):
 
 logger.info("loading input data")
 Xts = pd.read_csv(input_file)
+Xts = Xts/255.0
+Xts = Xts.values.reshape(-1,28,28,1)
 
 logger.info("loading model")
-with open('model.pkl', 'rb') as f:
-    m = pickle.load(f)
+m = load_model(model_file)
 
 logger.info("making predictions")
 preds = m.predict(Xts)
