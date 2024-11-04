@@ -1,0 +1,11 @@
+opencv-python
+pandas
+numpy
+joblib
+tensorflow
+scikit-learn
+argparse
+loguru
+flask
+requests
+pillow
