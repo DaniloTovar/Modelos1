@@ -45,12 +45,12 @@ Finalmente, ingresar al contenedor utilizando la siguiente linea de comando (CON
 docker exec -it CONTAINER_ID /bin/bash
 ```
 
-Podemos observar los archivos y la carpeta 'scripts' al interior utilizando el comando 'ls', ahora podemos ejecutar el archivo 'rest_api.py' para iniciar el servidor local utilizando la siguiente linea (NOTA: El proceso de entrenamiento y predicción puede demorar un tiempo mayor cuando no se utiliza GPU):
+Podemos observar los archivos y la carpeta 'scripts' al interior utilizando el comando 'ls', ahora podemos ejecutar el archivo 'rest_api.py' para iniciar el servidor local utilizando la siguiente linea:
 ```
 python3 rest_api.py
 ```
 
-Una vez inicializado el servidor, abrimos otra terminal y volvemos a ingresar al contenedor, así podemos simular el envio de peticiones al servidor mediante el archivo 'client.py' utilizando el siguiente comando:
+Una vez inicializado el servidor, abrimos otra terminal y volvemos a ingresar al contenedor, así podemos simular el envio de peticiones al servidor mediante el archivo 'client.py' utilizando el siguiente comando (NOTA: El proceso de entrenamiento y predicción puede demorar un tiempo mayor cuando no se utiliza GPU):
 ```
 python3 client.py
 ```
